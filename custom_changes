@@ -1,0 +1,23 @@
+
+    layers = [Dropout(0.0, input_shape=input_shape),
+              conv_2d(nb_filters, (3, 3), (1, 1), "same"),
+              Activation('relu'),
+              conv_2d((nb_filters * 2), (3, 3), (1, 1), "valid"),
+              Activation('relu'),
+              conv_2d((nb_filters * 2), (3, 3), (1, 1), "valid"),
+              Activation('relu'),
+              MaxPooling2D(pool_size=(2, 2)),
+              Dropout(0.25),
+              conv_2d(nb_filters, (3, 3), (1, 1), "same"),
+              Activation('relu'),
+              conv_2d((nb_filters * 2), (3, 3), (1, 1), "valid"),
+              Activation('relu'),
+              conv_2d((nb_filters * 2), (3, 3), (1, 1), "valid"),
+              Activation('relu'),
+              MaxPooling2D(pool_size=(2, 2)),
+              Dropout(0.5),
+              Flatten(),
+              Dense(512),
+              Dense(nb_classes)]
+
+train_step = tf.train.AdamOptimizer(learning_rate=args.learning_rate).minimize(loss)

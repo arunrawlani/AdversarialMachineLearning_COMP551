@@ -1,0 +1,17 @@
+In this project we use the cleverhans library (cited in our paper). The library can be found here https://github.com/openai/cleverhans
+
+Note that the way we wrote code to illustrate the methods was we modified the tutorials and examples provided by the cleverhans library in order to make it more appropriate for our project's requirements. We provide in this repository the modified versions of some of these files. We also made changes to some built-in functions in the cleverhans library. We outline  the functions that we changed in order to make the library work according to our requirements:
+
+1) The cnn_model function was modified by changing the architecture of the network specified in the list called 'layers'. This function can be found in cleverhans/cleverhans/utils.py. We provide the new architecture in a file called custom_changes.
+2) We had to change the optimizer in the model_train function in cleverhans/cleverhans/utils_tf.py. You can also find the new optimizer setup in the custom_changes file
+
+In order to run our model on the STL10 dataset, we had to download it and extract it from the binary file. Here we provide the instructions to do this:
+1) Download the binary file from this webpage https://cs.stanford.edu/~acoates/stl10/
+2) The webpage also provides the python code used to generate the dataset. We included a file called stl10.py which is a modified version of said python code. This file needs to be put in the same folder as the 'data' directory. This script combines the labeled train and test stl10 datasets and performs a 90-10 train-test split on the combined dataset. These 4 files need to be placed in the same directory as the code files for the attack and training methods
+
+Now we provide descriptions of the python files we included
+1) fgsm_adv_training.py - This file is a modified version of the cifar 10 example provided in the library. We added a function to build the VGG19 network and another to load the STL10 dataset (assuming the appropriate files described above are present). In order to switch datasets, just change the function that loads the dataset (data_dataset where dataset in {mnist, cifar10, stl10}). The input shapes for the network and the sizes of the placeholder variables also need to be adjusted for the different datasets. This file will train a model, generate adversarial examples, save those examples in a .npy file and perform the adversarial training approach as outlined in our paper. To run this file, place it in the cleverhans/examples/ directory
+
+2) jsma[cifar|mnist|stl].py - These files are modified versions of the mnist jsma tutorial provided in the library. We modified the dataset sources and the input sizes for the neural network models. To run any of these files, put them in the cleverhans/tutorials/ directory
+
+To run these files, just run python filename
